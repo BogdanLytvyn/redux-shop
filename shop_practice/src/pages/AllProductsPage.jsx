@@ -2,6 +2,7 @@ import { Component } from "react";
 import axios from 'axios';
 import { ProductListCont } from "../components/productList/ProductStyles";
 import {connect} from 'react-redux'
+import {deleteProduct} from '../redux/products/product.action'
 
 class AllProductPage extends Component {
     state = {
@@ -22,10 +23,18 @@ class AllProductPage extends Component {
   //     });
   // }
   addProduct = event => {
-    const { id } = event.target.dataset;
-    const product = this.state.products.find(item => item.id === id)
-    this.props.addToCart(product);
+    // const { id } = event.target.dataset;
+    // const product = this.state.products.find(item => item.id === id)
+    // this.props.addToCart(product);
   }
+
+  deleteProduct =(event)=>{
+    const { id } = event.target.dataset
+    this.props.deleteProduct(id)
+  }
+
+
+
   render() {
     const { productItems } = this.props;
     return (
@@ -52,8 +61,8 @@ class AllProductPage extends Component {
                 <p>
                   <b>Category:</b> {category}
                 </p>
-                <button type="button" data-id={id} onClick={this.addProduct}>
-                  Add
+                <button type="button" data-id={id} onClick={this.deleteProduct}>
+                 Delete
                 </button>
               </li>
             );
@@ -69,9 +78,5 @@ const mapStateToProps = (state) => ({
   productItems: state.productItems,
 })
 
-const mapDispatchToProps = {
-  
-}
-
-
+const mapDispatchToProps = { deleteProduct }
 export default connect(mapStateToProps, mapDispatchToProps)(AllProductPage);

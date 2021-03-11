@@ -1,20 +1,26 @@
-const initialState ={
-    productItems:[]
-}
+const initialState = {
+  productItems: [],
+  filter: '',
+};
+const productReducer = (state = initialState, action) => {
+  console.log(action);
+  switch (action.type) {
+    case 'products/addProduct':
+      return {
+        ...state,
+        productItems: [...state.productItems, action.payload],
+      };
+    case 'products/deleteProduct':
+      return {
+        ...state,
+        productItems: [
+          ...state.productItems.filter(item => item.id !== action.payload),
+        ],
+      };
 
-const productReducer =(state=initialState, action)=> {
-    console.log(action);
-    switch (action.type) {
-        case 'products/addProduct':
-            
-            return{productItems:[...state.productItems, action.payload]};
-    
-        default:
-            return state;
-    }
+    default:
+      return state;
+  }
+};
 
-
-
-}
-
-export default productReducer
+export default productReducer;
